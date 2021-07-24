@@ -1,2 +1,5 @@
 .stack-work/
 *~
+*.cabal
+*.txt
+.DS_Store
