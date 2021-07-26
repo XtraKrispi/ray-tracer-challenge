@@ -563,3 +563,10 @@ main = hspec do
                 transposeM m `shouldBe` expected
             it "Should transpose the identity matrix into itself" do
                 transposeM (identityMatrix 4 4) `shouldBe` identityMatrix 4 4
+        describe "Inverting Matrices" do
+            it "Should calculate the determinant of a 2x2 matrix" do
+                let m = mkMatrix 2 2 [((0, 0), 1), ((0, 1), 5), ((1, 0), -3), ((1, 1), 2)]
+
+                determinant m `shouldBe` 17
+
+-- TODO : Inverting Matrices

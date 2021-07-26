@@ -1,0 +1,13 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "ray-tracer-challenge:lib"
+
+    - path: "./app/Main.hs"
+      component: "ray-tracer-challenge:exe:ray-tracer-challenge-exe"
+
+    - path: "./app/Paths_ray_tracer_challenge.hs"
+      component: "ray-tracer-challenge:exe:ray-tracer-challenge-exe"
+
+    - path: "./test"
+      component: "ray-tracer-challenge:test:ray-tracer-challenge-test"

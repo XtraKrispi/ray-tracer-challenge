@@ -2,7 +2,7 @@ module Matrix where
 
 import Data.Array (Array, array, assocs, bounds, elems, indices, ixmap, (!), (//))
 import qualified Data.List as List
-import Data.Maybe (mapMaybe)
+import Data.Maybe (fromMaybe, mapMaybe)
 import Tuple (T (T), toTuple)
 
 newtype Matrix = Matrix {asArray :: Array (Int, Int) Double}
@@ -54,3 +54,11 @@ transposeM :: Matrix -> Matrix
 transposeM (Matrix m) =
     let (_, (rows, cols)) = bounds m
      in Matrix $ ixmap ((0, 0), (cols, rows)) (\(row, col) -> (col, row)) m
+
+determinant :: Matrix -> Double
+determinant m =
+    let a = (0, 0) `get` m
+        b = (0, 1) `get` m
+        c = (1, 0) `get` m
+        d = (1, 1) `get` m
+     in fromMaybe 0 $ (\a' b' c' d' -> a' * d' - b' * c') <$> a <*> b <*> c <*> d
