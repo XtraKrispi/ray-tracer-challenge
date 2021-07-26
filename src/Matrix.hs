@@ -1,6 +1,6 @@
 module Matrix where
 
-import Data.Array (Array, array, assocs, bounds, elems, indices, ixmap, (!), (//))
+import Data.Array (Array, array, assocs, bounds, elems, indices, ixmap, listArray, (!), (//))
 import qualified Data.List as List
 import Data.Maybe (fromMaybe, mapMaybe)
 import Tuple (T (T), toTuple)
@@ -62,3 +62,13 @@ determinant m =
         c = (1, 0) `get` m
         d = (1, 1) `get` m
      in fromMaybe 0 $ (\a' b' c' d' -> a' * d' - b' * c') <$> a <*> b <*> c <*> d
+
+submatrix :: Int -> Int -> Matrix -> Matrix
+submatrix row col (Matrix m) =
+    let allElems = assocs m
+        (_, (rows, cols)) = bounds m
+        filtered = snd <$> filter (\((r, c), _) -> r /= row && c /= col) allElems
+     in Matrix $ listArray ((0, 0), (rows - 1, cols - 1)) filtered
+
+minor :: Int -> Int -> Matrix -> Double
+minor row col = determinant . submatrix row col

@@ -568,5 +568,77 @@ main = hspec do
                 let m = mkMatrix 2 2 [((0, 0), 1), ((0, 1), 5), ((1, 0), -3), ((1, 1), 2)]
 
                 determinant m `shouldBe` 17
+            it "Should calculate proper submatrix of a 3x3 matrix" do
+                let m =
+                        mkMatrix
+                            3
+                            3
+                            [ ((0, 0), 1)
+                            , ((0, 1), 5)
+                            , ((0, 2), 0)
+                            , ((1, 0), -3)
+                            , ((1, 1), 2)
+                            , ((1, 2), 7)
+                            , ((2, 0), 0)
+                            , ((2, 1), 6)
+                            , ((2, 2), -3)
+                            ]
+                    expected = mkMatrix 2 2 [((0, 0), -3), ((0, 1), 2), ((1, 0), 0), ((1, 1), 6)]
+                submatrix 0 2 m `shouldBe` expected
+            it "Should calculate proper submatrix of a 4x4 matrix" do
+                let m =
+                        mkMatrix
+                            4
+                            4
+                            [ ((0, 0), -6)
+                            , ((0, 1), 1)
+                            , ((0, 2), 1)
+                            , ((0, 3), 6)
+                            , ((1, 0), -8)
+                            , ((1, 1), 5)
+                            , ((1, 2), 8)
+                            , ((1, 3), 6)
+                            , ((2, 0), -1)
+                            , ((2, 1), 0)
+                            , ((2, 2), 8)
+                            , ((2, 3), 2)
+                            , ((3, 0), -7)
+                            , ((3, 1), 1)
+                            , ((3, 2), -1)
+                            , ((3, 3), 1)
+                            ]
+                    expected =
+                        mkMatrix
+                            3
+                            3
+                            [ ((0, 0), -6)
+                            , ((0, 1), 1)
+                            , ((0, 2), 6)
+                            , ((1, 0), -8)
+                            , ((1, 1), 8)
+                            , ((1, 2), 6)
+                            , ((2, 0), -7)
+                            , ((2, 1), -1)
+                            , ((2, 2), 1)
+                            ]
 
--- TODO : Inverting Matrices
+                submatrix 2 1 m `shouldBe` expected
+            it "Should calculate the minor of a 3x3 matrix" do
+                let a =
+                        mkMatrix
+                            3
+                            3
+                            [ ((0, 0), 3)
+                            , ((0, 1), 5)
+                            , ((0, 2), 0)
+                            , ((1, 0), 2)
+                            , ((1, 1), -1)
+                            , ((1, 2), -7)
+                            , ((2, 0), 6)
+                            , ((2, 1), -1)
+                            , ((2, 2), 5)
+                            ]
+                    b = submatrix 1 0 a
+
+                determinant b `shouldBe` 25
+                minor 1 0 a `shouldBe` 25
