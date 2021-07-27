@@ -26,9 +26,11 @@ import Drawing.Output (
     getOutput,
     getRawFile,
  )
+import qualified IntersectionsSpec
 import Matrix
 import qualified MatrixSpec
 import qualified PPMSpec
+import qualified RaySpec
 import Test.Hspec (describe, hspec, it, shouldBe, shouldNotBe)
 import qualified TransformationSpec
 import Tuple (
@@ -56,3 +58,5 @@ main = hspec do
     PPMSpec.spec
     MatrixSpec.spec
     TransformationSpec.spec
+    RaySpec.spec
+    IntersectionsSpec.spec

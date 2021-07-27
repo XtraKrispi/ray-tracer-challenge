@@ -5,7 +5,7 @@ module TransformationSpec where
 import Matrix (inverse)
 import qualified Matrix
 import Test.Hspec (Spec, describe, it, shouldBe)
-import Transformation (rotationX, rotationY, rotationZ, scaling, translation)
+import Transformation (chain, rotationX, rotationY, rotationZ, scaling, shearing, translation)
 import Tuple (mkPoint, mkVector)
 
 spec :: Spec
@@ -68,3 +68,57 @@ spec = describe "Transformations" do
                 fullQuarter = rotationZ (pi / 2)
             Matrix.multT halfQuarter p `shouldBe` mkPoint (- sqrt 2 / 2) (sqrt 2 / 2) 0
             Matrix.multT fullQuarter p `shouldBe` mkPoint (-1) 0 0
+    describe "Shearing" do
+        it "Should move x in proportion to y" do
+            let transform = shearing 1 0 0 0 0 0
+                p = mkPoint 2 3 4
+            Matrix.multT transform p `shouldBe` mkPoint 5 3 4
+        it "Should move x in proportion to z" do
+            let transform = shearing 0 1 0 0 0 0
+                p = mkPoint 2 3 4
+            Matrix.multT transform p `shouldBe` mkPoint 6 3 4
+        it "Should move y in proportion to x" do
+            let transform = shearing 0 0 1 0 0 0
+                p = mkPoint 2 3 4
+            Matrix.multT transform p `shouldBe` mkPoint 2 5 4
+        it "Should move y in proportion to z" do
+            let transform = shearing 0 0 0 1 0 0
+                p = mkPoint 2 3 4
+            Matrix.multT transform p `shouldBe` mkPoint 2 7 4
+        it "Should move z in proportion to x" do
+            let transform = shearing 0 0 0 0 1 0
+                p = mkPoint 2 3 4
+            Matrix.multT transform p `shouldBe` mkPoint 2 3 6
+        it "Should move z in proportion to y" do
+            let transform = shearing 0 0 0 0 0 1
+                p = mkPoint 2 3 4
+            Matrix.multT transform p `shouldBe` mkPoint 2 3 7
+    describe "Chaining Transformations" do
+        it "Should apply individual transformations in sequence" do
+            let p = mkPoint 1 0 1
+                a = rotationX (pi / 2)
+                b = scaling 5 5 5
+                c = translation 10 5 7
+                p2 = Matrix.multT a p
+                p3 = Matrix.multT b p2
+                p4 = Matrix.multT c p3
+
+            p2 `shouldBe` mkPoint 1 (-1) 0
+            p3 `shouldBe` mkPoint 5 (-5) 0
+            p4 `shouldBe` mkPoint 15 0 7
+        it "Should apply chained transformations in reverse order" do
+            let p = mkPoint 1 0 1
+                a = rotationX (pi / 2)
+                b = scaling 5 5 5
+                c = translation 10 5 7
+                t = c `Matrix.multM` b `Matrix.multM` a
+
+            Matrix.multT t p `shouldBe` mkPoint 15 0 7
+        it "Should chain transformations correctly" do
+            let p = mkPoint 1 0 1
+                a = rotationX (pi / 2)
+                b = scaling 5 5 5
+                c = translation 10 5 7
+                t = chain [c, b, a]
+
+            Matrix.multT t p `shouldBe` mkPoint 15 0 7
