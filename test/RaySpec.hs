@@ -2,6 +2,7 @@
 
 module RaySpec where
 
+import Data.Function
 import Intersections
 import Object
 import Ray
@@ -68,6 +69,21 @@ spec = describe "Rays" do
             length xs `shouldBe` 2
             intersectionObject (head xs) `shouldBe` s
             intersectionObject (xs !! 1) `shouldBe` s
+
+        it "Should intersect a scaled sphere with a ray" do
+            let r = mkRay (mkPoint 0 0 (-5)) (mkVector 0 0 1)
+                s = mkSphere & setTransform (scaling 2 2 2)
+                xs = r `intersect` s
+
+            intersectionTValue <$> xs `shouldBe` [3, 7]
+
+        it "Should intersect a translated sphere with a ray" do
+            let r = mkRay (mkPoint 0 0 (-5)) (mkVector 0 0 1)
+                s = mkSphere & setTransform (translation 5 0 0)
+                xs = r `intersect` s
+
+            length xs `shouldBe` 0
+
     describe "Ray transformations" do
         it "Should translate a ray" do
             let r = mkRay (mkPoint 1 2 3) (mkVector 0 1 0)

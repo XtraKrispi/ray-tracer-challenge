@@ -29,6 +29,7 @@ import Drawing.Output (
 import qualified IntersectionsSpec
 import Matrix
 import qualified MatrixSpec
+import qualified ObjectSpec
 import qualified PPMSpec
 import qualified RaySpec
 import Test.Hspec (describe, hspec, it, shouldBe, shouldNotBe)
@@ -60,3 +61,4 @@ main = hspec do
     TransformationSpec.spec
     RaySpec.spec
     IntersectionsSpec.spec
+    ObjectSpec.spec

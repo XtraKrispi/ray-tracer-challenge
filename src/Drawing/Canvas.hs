@@ -18,6 +18,9 @@ data Canvas = Canvas
 mkCanvas :: Width -> Height -> Color -> Canvas
 mkCanvas w h c = Canvas w h $ Map.fromList [((x, y), c) | x <- [0 .. w -1], y <- [0 .. h -1]]
 
+mkCanvasWithData :: Width -> Height -> [((Int, Int), Color)] -> Canvas
+mkCanvasWithData w h c = Canvas w h $ Map.fromList c
+
 toList :: Canvas -> [((Int, Int), Color)]
 toList = Map.toList . canvasGrid
 

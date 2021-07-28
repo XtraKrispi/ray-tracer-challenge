@@ -1,5 +1,9 @@
+{-# LANGUAGE DeriveGeneric #-}
+
 module Drawing.Color where
 
+import Control.Parallel.Strategies
+import GHC.Generics
 import Utils (eq)
 
 data Color = Color
@@ -7,7 +11,9 @@ data Color = Color
     , colorG :: Double
     , colorB :: Double
     }
-    deriving (Show)
+    deriving (Show, Generic)
+
+instance NFData Color
 
 instance Eq Color where
     (Color r g b) == (Color r' g' b') =

@@ -20,6 +20,9 @@ mkPoint x y z = T (x, y, z, 1)
 toTuple :: T -> (Double, Double, Double, Double)
 toTuple = unT
 
+setW :: Double -> T -> T
+setW w (T (x, y, z, _)) = T (x, y, z, w)
+
 xVal :: T -> Double
 xVal (T (x, _, _, _)) = x
 

@@ -1,10 +1,28 @@
-module Projectile where
+module Exercises.Projectile where
 
 import Data.Maybe (fromMaybe)
-import Drawing.Canvas
-import Drawing.Color
-import Drawing.Output
-import Tuple
+import Drawing.Canvas (
+    Canvas (canvasHeight),
+    mkCanvas,
+    writePixel,
+ )
+import Drawing.Color (mkColor)
+import Drawing.Output (
+    FileType (PPMType),
+    getOutput,
+    getRawFile,
+    writeRaw,
+ )
+import Tuple (
+    T,
+    addT,
+    mkPoint,
+    mkVector,
+    multiplyScalar,
+    normalizeT,
+    toTuple,
+    yVal,
+ )
 
 data Environment = Environment {gravity :: T, wind :: T}
     deriving (Show)
