@@ -3,6 +3,7 @@
 module ObjectSpec where
 
 import Data.Function
+import Material
 import Matrix
 import Object
 import Test.Hspec
@@ -57,3 +58,13 @@ spec = describe "Sphere" do
                 n = normalAt (mkPoint 0 (sqrt 2 / 2) (- sqrt 2 / 2)) s
 
             n `shouldBe` mkVector 0 0.97014 (-0.24254)
+    describe "Material" do
+        it "Should have a default material" do
+            let s = mkSphere
+
+            sphereMaterial s `shouldBe` mkMaterial
+
+        it "Should be assigned a material" do
+            let m = mkMaterial & setAmbient 1
+                s = mkSphere & setMaterial m
+            sphereMaterial s `shouldBe` m

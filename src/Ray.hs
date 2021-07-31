@@ -15,7 +15,7 @@ position :: Double -> Ray -> T
 position t (Ray o dir) = o `addT` (dir `multiplyScalar` t)
 
 intersect :: Ray -> Object -> Intersections
-intersect ray s@(Sphere sphereOrigin sphereTransform) =
+intersect ray s@(Sphere sphereOrigin sphereTransform _) =
     let newRay = flip transform ray <$> inverse sphereTransform
         op (Ray rayOrigin rayDirection) =
             let sphereToRay = subtractT rayOrigin sphereOrigin

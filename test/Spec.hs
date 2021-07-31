@@ -27,6 +27,8 @@ import Drawing.Output (
     getRawFile,
  )
 import qualified IntersectionsSpec
+import qualified LightSpec
+import qualified MaterialSpec
 import Matrix
 import qualified MatrixSpec
 import qualified ObjectSpec
@@ -50,6 +52,7 @@ import Tuple (
     toTuple,
  )
 import qualified TupleSpec
+import qualified WorldSpec
 
 main :: IO ()
 main = hspec do
@@ -62,3 +65,6 @@ main = hspec do
     RaySpec.spec
     IntersectionsSpec.spec
     ObjectSpec.spec
+    LightSpec.spec
+    MaterialSpec.spec
+    WorldSpec.spec

@@ -58,8 +58,11 @@ normalizeT :: T -> T
 normalizeT t@(T (x, y, z, w)) = T (x / magnitudeT t, y / magnitudeT t, z / magnitudeT t, w / magnitudeT t)
 
 dotProduct :: T -> T -> Double
-dotProduct (T (x, y, z, w)) (T (x', y', z', w')) = (x * x') + (y * y') + (z * z') + (w * w')
+dotProduct (T (x, y, z, w)) (T (x', y', z', w')) = x * x' + y * y' + z * z' + w * w'
 
 crossProduct :: T -> T -> T
 crossProduct (T (x, y, z, w)) (T (x', y', z', w')) =
     mkVector (y * z' - z * y') (z * x' - x * z') (x * y' - y * x')
+
+reflect :: T -> T -> T
+reflect v n = v `subtractT` (n `multiplyScalar` (2 * dotProduct v n))

@@ -22,6 +22,9 @@ instance Eq Color where
 mkColor :: Double -> Double -> Double -> Color
 mkColor = Color
 
+black :: Color
+black = mkColor 0 0 0
+
 op :: (Double -> Double -> Double) -> Color -> Color -> Color
 op fn (Color r g b) (Color r' g' b') = Color (fn r r') (fn g g') (fn b b')
 

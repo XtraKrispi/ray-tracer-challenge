@@ -15,6 +15,7 @@ import Tuple (
     multiplyScalar,
     negateT,
     normalizeT,
+    reflect,
     subtractT,
     toTuple,
  )
@@ -149,3 +150,15 @@ spec = describe "Tuples, Points, Vectors" do
                 actual2 = crossProduct v2 v1
             actual1 `shouldBe` expected1
             actual2 `shouldBe` expected2
+    describe "Reflection" do
+        it "Should reflect at a 45 degree angle" do
+            let v = mkVector 1 (-1) 0
+                n = mkVector 0 1 0
+
+            reflect v n `shouldBe` mkVector 1 1 0
+
+        it "Should reflect off a slanted surface" do
+            let v = mkVector 0 (-1) 0
+                n = mkVector (sqrt 2 / 2) (sqrt 2 / 2) 0
+
+            reflect v n `shouldBe` mkVector 1 0 0
